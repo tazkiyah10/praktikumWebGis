@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peta Destinasi Pulau Nias</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    
+    <style>
+        body { margin: 0; background: #fafafa; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        #map { height: 100vh; width: 100%; } 
+        
+        /* Ikon Custom Biru Laut */
+        .custom-div-icon {
+            background: #2980b9; /* Warna Biru Laut */
+            border: 3px solid white;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        .custom-div-icon i {
+            transform: rotate(45deg);
+            color: white;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Koordinat Pulau Nias
+        const lat = 1.118432;
+        const lon = 97.461386;
+
+        // Inisialisasi peta dengan Zoom 12 agar area sekitar terlihat
+        const map = L.map('map').setView([lat, lon], 12);
+
+        // Menggunakan basemap OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Ikon Pin dengan simbol ombak (Relevant dengan Nias sebagai destinasi surfing)
+        const iconNias = L.divIcon({
+            className: 'custom-div-icon',
+            html: '<i class="fa-solid fa-water"></i>',
+            iconSize: [40, 40],
+            iconAnchor: [20, 40]
+        });
+
+        // Marker Pulau Nias
+        L.marker([lat, lon], {icon: iconNias})
+            .addTo(map)
+            .bindPopup("<b>Destinasi Pulau Nias</b><br>Sumatera Utara, Indonesia.")
+            .openPopup();
+
+        // Tambahan: Area Lingkaran Radius 5km
+        L.circle([lat, lon], {
+            color: '#3498db',
+            fillColor: '#85c1e9',
+            fillOpacity: 0.3,
+            radius: 5000
+        }).addTo(map).bindPopup("Radius Eksplorasi 5km");
+    </script>
+</body>
+</html>
